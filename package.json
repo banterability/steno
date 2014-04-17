@@ -1,0 +1,19 @@
+{
+  "name": "steno",
+  "version": "0.0.0",
+  "description": "",
+  "main": "index.coffee",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "mocha": "~1.18.2",
+    "coffee-script": "~1.7.1"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "author": "Jeff Long",
+  "license": "MIT"
+}
