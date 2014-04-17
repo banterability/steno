@@ -1,0 +1,8 @@
+#!/usr/bin/env coffee
+
+parseArgs = require 'minimist'
+Steno = require '../lib/steno'
+
+stenographer = new Steno parseArgs(process.argv.slice(2))
+
+stenographer.transcribe()
