@@ -15,5 +15,13 @@
     "test": "mocha"
   },
   "author": "Jeff Long",
-  "license": "MIT"
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/banterability/steno.git"
+  },
+  "bugs": {
+    "url": "https://github.com/banterability/steno/issues"
+  },
+  "homepage": "https://github.com/banterability/steno"
 }
