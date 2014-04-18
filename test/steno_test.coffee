@@ -1,11 +1,13 @@
 assert = require 'assertive'
+bond = require 'bondjs'
+fs = require 'fs'
 Steno = require '../lib/steno'
 
 describe 'Steno', ->
   it 'exists', ->
     assert.expect new Steno
 
-  describe 'arguments', ->
+  describe '#constructor', ->
     describe 'directory', ->
       it 'accepts a --directory argument', ->
         s = new Steno directory: '/'
@@ -40,3 +42,24 @@ describe 'Steno', ->
       it 'defaults to a text files', ->
         s = new Steno {}
         assert.equal 'txt', s.filetype
+
+  describe '#findFiles', ->
+    beforeEach ->
+      @s = new Steno prefix: 'test'
+      bond(fs, 'readdir').asyncReturn null, ['a file.txt', 'test file.txt', 'not a test file.txt']
+
+    it 'returns only files matching the specified prefix', ->
+      @s.findFiles (err, files, stats) ->
+        assert.equal 1, files.length
+        assert.equal 'test file.txt', files[0]
+
+    it 'returns information on files found, before and after filtering', ->
+      @s.findFiles (err, files, stats) ->
+        assert.equal 3, stats.beforeFilter
+        assert.equal 1, stats.afterFilter
+
+    it 'returns an empty array on error', ->
+      bond(fs, 'readdir').asyncReturn 'foo'
+      @s.findFiles (err, files, stats) ->
+        assert.equal 'foo', err
+        assert.deepEqual [], files
