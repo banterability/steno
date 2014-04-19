@@ -66,3 +66,19 @@ describe 'Steno', ->
         @s.findFiles (err, files, stats) ->
           assert.equal 3, stats.beforeFilter
           assert.equal 1, stats.afterFilter
+
+    describe 'filetype filtering', ->
+      beforeEach ->
+        @s = new Steno filetype: 'md'
+        bond(fs, 'readdir').asyncReturn null, ['confidential.md', 'secret.txt', 'secret.md', 'secret.xls']
+
+      it 'returns only files matching the specified filetype', ->
+        @s.findFiles (err, files, stats) ->
+          assert.equal 2, files.length
+          assert.equal 'confidential.md', files[0]
+          assert.equal 'secret.md', files[1]
+
+      it 'returns information on files found, before and after filtering', ->
+        @s.findFiles (err, files, stats) ->
+          assert.equal 4, stats.beforeFilter
+          assert.equal 2, stats.afterFilter

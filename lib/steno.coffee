@@ -10,7 +10,7 @@ class Steno
   findFiles: (cb) ->
     fs.readdir @directory, (err, files) =>
       return cb err, [], {} if err
-      matchExpression = ///^#{@prefix}///
+      matchExpression = ///^#{@prefix}.*\.#{@filetype}$///
       matchingFiles = filter files, (filename) -> filename.match matchExpression
       cb null, matchingFiles, {beforeFilter: files.length, afterFilter: matchingFiles.length}
 
