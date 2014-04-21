@@ -82,3 +82,16 @@ describe 'Steno', ->
         @s.findFiles (err, files, stats) ->
           assert.equal 4, stats.beforeFilter
           assert.equal 2, stats.afterFilter
+
+  describe '#readFile', ->
+    before ->
+      bond(fs, 'readFile').through()
+      @s = new Steno directory: '.'
+
+    it 'calls through to native fs.readfile', ->
+      @s.readFile 'whatever.txt', (err, data) ->
+        #no-op
+        assert.equal 1, fs.readFile.called
+        lastCallArgs = fs.readFile.calledArgs[0]
+        assert.equal './whatever.txt', lastCallArgs[0]
+        assert.deepEqual {encoding: 'utf-8'}, lastCallArgs[1]

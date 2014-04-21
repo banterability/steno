@@ -14,4 +14,8 @@ class Steno
       matchingFiles = filter files, (filename) -> filename.match matchExpression
       cb null, matchingFiles, {beforeFilter: files.length, afterFilter: matchingFiles.length}
 
+  readFile: (filename, cb) ->
+    fs.readFile "#{@directory}/#{filename}", encoding: 'utf-8', (err, data) ->
+      cb err, data
+
 module.exports = Steno
