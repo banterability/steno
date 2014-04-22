@@ -17,6 +17,10 @@ describe 'Steno', ->
         s = new Steno d: '/var/log'
         assert.equal '/var/log', s.directory
 
+      it 'defaults to the current directory', ->
+        s = new Steno
+        assert.equal '.', s.directory
+
     describe 'prefix', ->
       it 'accepts a --prefix argument', ->
         s = new Steno prefix: 'important'
